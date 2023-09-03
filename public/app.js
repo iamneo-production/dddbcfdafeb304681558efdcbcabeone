@@ -17,7 +17,11 @@ let conditions = [
 // Function to handle player moves
 const ticTacToe = (element, index) => {
     // Your game logic here
+    if (cells[index] !== '') return;
 
+    // Update the game state
+    cells[index] = currentPlayer;
+    element.textContent = currentPlayer;
     /*
     **Part 1: Winning Conditions (Add your code here)**
 
@@ -25,36 +29,44 @@ const ticTacToe = (element, index) => {
     2. Display a winning message in the 'result' element when a player wins.
     3. Disable all buttons after a win.
     */
+   
+    for (const condition of conditions) {
+        const [a, b, c] = condition;
+        if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+            // Your code to update the game state and check for a win
+            // ...
+            result.textContent = `${currentPlayer} wins!`;
 
-    // Your code to update the game state and check for a win
-    // ...
-
-    // Your code to display the current player's turn
-    // ...
+            // Your code to display the current player's turn
+            // ...
+            btns.forEach(btn => btn.disabled = true);
+            return; // Exit the function to prevent further moves
+        }
+    }
 
     // Your code to handle button and cell interactions
     // ...
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    result.textContent = `Current Player: ${currentPlayer}`;
 };
-
-    /*
-    **Part 2: Reset Function (Add your code here)**
-
-    1. Implement a new function that resets the game to its initial state.
-    2. Ensure the 'cells', 'btns', and 'currentPlayer' variables are reset.
-    3. Update the 'result' element to indicate the current player's turn.
-    4. Re-enable all buttons for a new game.
-    */
 
 // Function to reset the game
 const resetGame = () => {
     // Your code to reset the game state
     // ...
+    cells = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'X';
 
     // Your code to update the 'result' element
-    // ...
+    // ... 
+    btns.forEach((btn, i) => {
+        btn.textContent = '';
+        btn.disabled = false;
+    });
 
     // Your code to re-enable buttons
     // ...
+    result.textContent = 'Current Player: X'
 };
 
 btns.forEach((btn, i) => {
